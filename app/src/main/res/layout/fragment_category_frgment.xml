@@ -5,8 +5,10 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/list_view_category">
+        android:id="@+id/list_view_category"
+        android:divider="@drawable/list_divider"
+        android:dividerHeight="2.0sp"
+        android:background="@drawable/customborder"/>
 
-    </ListView>
 
 </FrameLayout>

@@ -6,7 +6,10 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/list_view_service">
+        android:id="@+id/list_view_service"
+        android:divider="@drawable/list_divider"
+        android:dividerHeight="2.0sp"
+        android:background="@drawable/customborder">
 
     </ListView>
 
