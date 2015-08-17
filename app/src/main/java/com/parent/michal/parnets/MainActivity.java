@@ -3,6 +3,7 @@ package com.parent.michal.parnets;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
@@ -40,7 +42,6 @@ public class MainActivity extends FragmentActivity  {
     GoogleApiClient mGoogleApiClient;
     Button btnLocation,btnChooseDate;
     private DatePicker dpResult;
-
     private int year;
     private int month;
     private int day;
@@ -83,28 +84,12 @@ public class MainActivity extends FragmentActivity  {
             }
 
         });
+        CategoryFrgment myf = new CategoryFrgment();
 
-        List<ObjectItem> ObjectItemData = null;
-        //getCategories from server!!!
-        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.clown);
-        Bitmap bm1 = BitmapFactory.decodeResource(getResources(), R.drawable.magician);
-        ObjectItemData =new ArrayList<ObjectItem>();
-        ObjectItemData.add(new ObjectItem(91, "Clowns",bm));
-        ObjectItemData.add( new ObjectItem(92, "magician",bm1));
-        ObjectItemData.add( new ObjectItem(93, "Science activities ",bm1));
-        ObjectItemData.add( new ObjectItem(94, "Animal activities  ",bm1));
-        ObjectItemData.add( new ObjectItem(95, "Music activities ",bm1));
-        ObjectItemData.add( new ObjectItem(96, "Dress Up activities ",bm1));
-        ObjectItemData.add( new ObjectItem(97, "Cocking activities ",bm1));
-        ObjectItemData.add( new ObjectItem(98, "Inflatables activities ",bm1));
-        ObjectItemData.add( new ObjectItem(99, "DJ’s",bm1));
-        ObjectItemData.add( new ObjectItem(100, "Photographers",bm1));
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.add(R.id.main, myf);
+        transaction.commit();
 
-
-        ListCategoryAdapter adapter = new ListCategoryAdapter(this, R.layout.list_item, ObjectItemData);
-        // create a new ListView, set the adapter and item click listener
-        ListView listViewItems = (ListView) findViewById(R.id.list_view_category);
-        listViewItems.setAdapter(adapter);
 
 
         setCurrentDateOnView();
@@ -191,7 +176,7 @@ public class MainActivity extends FragmentActivity  {
                 .append(month + 1).append("-").append(day).append("-")
                 .append(year).append(" "));
 
-    
+
     }
     public void addListenerOnButton() {
 

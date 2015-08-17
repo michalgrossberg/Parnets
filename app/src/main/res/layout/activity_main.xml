@@ -33,7 +33,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:background="#FFFFFF"
         android:id="@+id/main"
         android:layout_width="match_parent"
@@ -43,14 +43,9 @@
 
         >
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/list_view_category">
 
-            </ListView>
 
-    </LinearLayout>
+    </FrameLayout>
     <LinearLayout
         android:background="#aabbcc"
         android:layout_width="match_parent"
