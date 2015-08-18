@@ -30,12 +30,12 @@ public class ServiceProviderFragment extends Fragment {
 
         //getCategories from server!!!
 
-        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.clown);
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.me_round);
         Bitmap bm1 = BitmapFactory.decodeResource(getResources(), R.drawable.magician);
         serviceItems =new ArrayList<ServiceItem>();
         //(Bitmap profilepicture, int rating, String pricerange, String location)
 
-        serviceItems.add(new ServiceItem(bm, "avi",5, "50-70","haifa"));
+        serviceItems.add(new ServiceItem(bm, "Michal Grossberg", 5, "50-70","one line description that the service provider itself choose"));
         serviceItems.add(new ServiceItem(bm, "avi",5, "50-70","tel aviv"));
         serviceItems.add(new ServiceItem(bm, "avi",5, "100-150","San Diego"));
         serviceItems.add(new ServiceItem(bm, "avi",5, "200-220","New york"));

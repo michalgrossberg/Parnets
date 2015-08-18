@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -64,7 +65,7 @@ public class ServiceAdapter extends ArrayAdapter<ServiceItem> {
         //textViewItem.setTag(serviceItem.getName());
 
         TextView textViewRating = (TextView) convertView.findViewById(R.id.txtRating);
-        textViewItem.setText(String.valueOf(serviceItem.getRating())
+        textViewItem.setText("Rate is : " +String.valueOf(serviceItem.getRating())
         );
         //textViewItem.setTag(serviceItem.getRating());
 
@@ -75,7 +76,8 @@ public class ServiceAdapter extends ArrayAdapter<ServiceItem> {
         TextView textViewLocation = (TextView) convertView.findViewById(R.id.txtLocation);
         textViewItem.setText(serviceItem.getLocation());
        // textViewItem.setTag(serviceItem.getLocation());
-
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.ingViewPrpfilePic);
+        imageView.setImageBitmap(serviceItem.getProfilepicture());
 
 
 

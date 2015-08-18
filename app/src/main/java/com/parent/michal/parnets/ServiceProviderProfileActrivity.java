@@ -1,15 +1,19 @@
 package com.parent.michal.parnets;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 
 public class ServiceProviderProfileActrivity extends Activity {
 
+    ImageButton btnBackProfile;
     ImageView imageViewGallery ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,8 +21,20 @@ public class ServiceProviderProfileActrivity extends Activity {
         setContentView(R.layout.activity_service_provider_profile);
         imageViewGallery= (ImageView) findViewById(R.id.imgViewGallery);
         imageViewGallery.setScaleType(ImageView.ScaleType.FIT_XY);
+        btnBackProfile= (ImageButton) findViewById(R.id.btnBackProfile);
+        btnBackProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onBackPressed();
+            }
+        });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
