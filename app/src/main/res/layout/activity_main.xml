@@ -6,7 +6,7 @@
     android:weightSum="10"
     >
     <LinearLayout
-    android:background="#aabbcc"
+    android:background="#ffffff"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -19,7 +19,7 @@
            android:layout_height="match_parent"
            android:id="@+id/btnChooseDate"
            android:background="@null"
-           android:text="Please choose the even date"
+           android:text="Please choose the event date"
            android:layout_weight="2"
            android:gravity="center"/>
         <TextView
@@ -47,7 +47,7 @@
 
     </FrameLayout>
     <LinearLayout
-        android:background="#aabbcc"
+        android:background="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"

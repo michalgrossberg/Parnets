@@ -2,6 +2,11 @@ package com.parent.michal.parnets;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +68,9 @@ public class ListCategoryAdapter  extends ArrayAdapter<CtegoryItem> {
         TextView textViewItem = (TextView) convertView.findViewById(R.id.category_name);
         textViewItem.setText(ctegoryItem.itemName);
         textViewItem.setTag(ctegoryItem.itemId);
-
+        textViewItem.setTextColor(Color.WHITE);
+        textViewItem.setTextSize(40);
+        textViewItem.setTypeface(null, Typeface.BOLD);
         LinearLayout linearLayout = (LinearLayout) convertView.findViewById(R.id.LayoutItem);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         //Facing an problem with the picd
@@ -76,6 +83,9 @@ public class ListCategoryAdapter  extends ArrayAdapter<CtegoryItem> {
 
         //Drawable drawable = new BitmapDrawable(mContext.getResources(),decoded);
         //linearLayout.setBackground(drawable);
-
+        BitmapDrawable d = new BitmapDrawable(ctegoryItem.getCover());
+        //BitmapDrawable background = new BitmapDrawable(bmImg);
+        linearLayout.setBackgroundDrawable(d);
+        linearLayout.setAlpha((float) 0.9);
         return convertView;    }
 }

@@ -61,20 +61,19 @@ public class ServiceAdapter extends ArrayAdapter<ServiceItem> {
         // get the TextView and then set the text (item name) and tag (item ID) values
         TextView textViewItem = (TextView) convertView.findViewById(R.id.txtNameProvider);
         String name=serviceItem.getName().toString();
-        textViewItem.setText("name");
-        //textViewItem.setTag(serviceItem.getName());
+        textViewItem.setText(serviceItem.getName());
 
-        TextView textViewRating = (TextView) convertView.findViewById(R.id.txtRating);
-        textViewItem.setText("Rate is : " +String.valueOf(serviceItem.getRating())
-        );
-        //textViewItem.setTag(serviceItem.getRating());
+
+        TextView tvdesc = (TextView) convertView.findViewById(R.id.txtDescription);
+        tvdesc.setText(serviceItem.getDecription());
+
 
         TextView textViewPricing = (TextView) convertView.findViewById(R.id.txtPricing);
-        textViewItem.setText(serviceItem.getPricerange());
+        textViewPricing.setText("price range : " +serviceItem.getPricerange());
         //textViewItem.setTag(serviceItem.getPricerange());
 
-        TextView textViewLocation = (TextView) convertView.findViewById(R.id.txtLocation);
-        textViewItem.setText(serviceItem.getLocation());
+        /*TextView textViewLocation = (TextView) convertView.findViewById(R.id.txtLocation);
+        textViewLocation.setText(serviceItem.getLocation());*/
        // textViewItem.setTag(serviceItem.getLocation());
         ImageView imageView = (ImageView) convertView.findViewById(R.id.ingViewPrpfilePic);
         imageView.setImageBitmap(serviceItem.getProfilepicture());

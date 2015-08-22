@@ -32,9 +32,14 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 
 
 public class MainActivity extends FragmentActivity  {
@@ -45,6 +50,7 @@ public class MainActivity extends FragmentActivity  {
     private int year;
     private int month;
     private int day;
+    private String DATE;
 
     static final int DATE_DIALOG_ID = 999;
 
@@ -177,6 +183,7 @@ public class MainActivity extends FragmentActivity  {
                 .append(year).append(" "));
 
 
+
     }
     public void addListenerOnButton() {
 
@@ -213,9 +220,23 @@ public class MainActivity extends FragmentActivity  {
             day = selectedDay;
 
             // set selected date into textview
+
             txtDateDisplay.setText(new StringBuilder().append(month + 1)
                     .append("-").append(day).append("-").append(year)
                     .append(" "));
+            int i =month+1;
+            String tmp=i+ " "+day+" "+year;
+
+            Calendar c = Calendar.getInstance();
+            c.set(year, i, day);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String formattedDate = sdf.format(c.getTime());
+            DATE=formattedDate;
+            SharedHandler.save("date", DATE,
+                    "details", MainActivity.this);
+
+            //Toast.makeText(getApplicationContext(), formattedDate, Toast.LENGTH_SHORT).show();
 
 
         }

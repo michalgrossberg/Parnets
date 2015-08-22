@@ -17,17 +17,30 @@ public class ServiceItem {
         Name = name;
     }
 
+    public int Id;
+
     String Name;
     int Rating;
     String Pricerange;
     String Location;
+    String Decription;
+    String FullDecription;
+    int CategoryId;
+    public String getDecription() {
+        return Decription;
+    }
 
-    public ServiceItem(Bitmap profilepicture,String name, int rating, String pricerange, String location) {
+    public void setDecription(String decription) {
+        Decription = decription;
+    }
+
+    public ServiceItem(Bitmap profilepicture,String name, int rating, String pricerange, String location , String decription) {
         Profilepicture = profilepicture;
         Rating = rating;
         Pricerange = pricerange;
         Location = location;
         Name=name;
+        Decription=decription;
     }
 
     public void setProfilepicture(Bitmap profilepicture) {
