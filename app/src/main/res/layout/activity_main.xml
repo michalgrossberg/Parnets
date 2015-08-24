@@ -6,30 +6,79 @@
     android:weightSum="10"
     >
     <LinearLayout
-    android:background="#ffffff"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-        android:layout_weight="4.5"
-        android:weightSum="3"
-    >
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="4"
+        android:weightSum="6"
+        >
 
-       <Button
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:id="@+id/btnChooseDate"
-           android:background="@null"
-           android:text="Please choose the event date"
-           android:layout_weight="2"
-           android:gravity="center"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/btnChooseDate"
+            android:background="@null"
+            android:layout_weight="2"
+            android:text="Please choose the event date"
+
+            android:gravity="center"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:id="@+id/txtDateDisplay"
             android:gravity="center"
+            android:layout_weight="2"
+
             />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/txtPrice"
+            android:gravity="center"
+            android:text="Please set price"
+            android:layout_weight="2"
+
+            android:textSize="15sp"
+            />
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seekBar"
+            android:max="1000"
+            android:progress="500"
+            android:layout_weight="1"
+
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/txtmin"
+                android:gravity="left"
+                android:text="0"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/txtmax"
+                android:gravity="right"
+                android:text="1000"
+                android:textSize="15sp"
+                android:paddingRight="10dp"
+                />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -39,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
 
         >
 

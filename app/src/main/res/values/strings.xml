@@ -7,5 +7,6 @@
     <string name="google_api_key">AIzaSyCZE51pSso_ZdsRUQeFiyJ47dkf0MQqF80</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_service_provider_profile">ServiceProviderProfile</string>
+    <string name="title_activity_log_in">LogIn</string>
 
 </resources>

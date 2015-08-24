@@ -1,24 +1,32 @@
 package com.parent.michal.parnets;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 
 public class ServiceProviderProfileActrivity extends Activity {
 
+    Context mcontext;
     ImageButton btnBackProfile;
     ImageView imageViewGallery ;
+    Button btnBook;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mcontext=getApplication();
         setContentView(R.layout.activity_service_provider_profile);
+        btnBook= (Button) findViewById(R.id.btnBook);
         imageViewGallery= (ImageView) findViewById(R.id.imgViewGallery);
         imageViewGallery.setScaleType(ImageView.ScaleType.FIT_XY);
         btnBackProfile= (ImageButton) findViewById(R.id.btnBackProfile);
@@ -27,6 +35,19 @@ public class ServiceProviderProfileActrivity extends Activity {
             public void onClick(View v) {
 
                 onBackPressed();
+            }
+        });
+
+        btnBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // custom dialog
+                //this row has a problem!!!!!!!!!!!!!!
+                final Dialog dialog = new Dialog(getApplicationContext());
+                dialog.setContentView(R.layout.dialog_book);
+                dialog.setTitle("Title...");
+                dialog.show();
+
             }
         });
     }

@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class MainActivity extends FragmentActivity  {
     private int month;
     private int day;
     private String DATE;
+    SeekBar seekBar;
 
     static final int DATE_DIALOG_ID = 999;
 
@@ -63,6 +65,7 @@ public class MainActivity extends FragmentActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        seekBar= (SeekBar) findViewById(R.id.seekBar);
         btnLocation= (Button) findViewById(R.id.btnLocation);
         btnChooseDate= (Button) findViewById(R.id.btnChooseDate);
         btnChooseDate.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +92,23 @@ public class MainActivity extends FragmentActivity  {
                 }
             }
 
+        });
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Toast.makeText(getApplicationContext(), "needs to change the search again!!!, newVal : progress " +seekBar.getProgress(), Toast.LENGTH_SHORT).show();
+
+            }
         });
         CategoryFrgment myf = new CategoryFrgment();
 

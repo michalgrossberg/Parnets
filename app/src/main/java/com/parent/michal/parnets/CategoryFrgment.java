@@ -26,7 +26,7 @@ import retrofit.RestAdapter;
 public class CategoryFrgment  extends Fragment {
 
     List<CtegoryItem> ctegoryItemData = null;
-    public static final String BASE_URL = "http://localhost";
+    public static final String BASE_URL = "http://localhost:3000";
     RestAdapter restAdapter = new RestAdapter.Builder()
             .setEndpoint(BASE_URL)
             .build();
