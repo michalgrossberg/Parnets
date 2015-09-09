@@ -15,13 +15,12 @@ router.get('/login/:email/:password', function(req, res) {
 });
 
 router.post('/register', function(req, res) {
-	user = req.param('user')
   User.create({
-	firstName: user.firstName,
-	lastName: user.lastName,
-	email: user.email,
-	password: user.password,
-	type: type
+	firstName: req.body.firstName,
+	lastName: req.body.lastName,
+	email: req.body.email,
+	password: req.body.password,
+	type: req.body.type
   }).then(function(catagory) {
 	res.status(201);
 	res.end();

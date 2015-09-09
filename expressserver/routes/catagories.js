@@ -20,11 +20,9 @@ router.get('/:name', function(req, res) {
 });
 
 router.post('/register', function(req, res) {
-  name = req.param('name')
-  image = req.param('image')
   Catagory.create({
-	  name: name,
-	  image: image
+	  name: req.body.name,
+	  image: req.body.image
   }).then(function(catagory) {
 	res.status(201);
 	res.end();

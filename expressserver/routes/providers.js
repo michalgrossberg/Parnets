@@ -20,17 +20,12 @@ router.get('/:name', function(req, res) {
 });
 
 router.post('/register', function(req, res) {
-  name = req.param('name')
-  location = req.param('location')
-  desctiprion = req.param('desctiprion')
-  fullDesctiprion = req.param('fullDesctiprion')
-  image = req.param('image')
   Provider.create({
-	name: name,
-	location: location,
-	desctiprion: desctiprion,
-	fullDesctiprion: fullDesctiprion,
-	image: image
+	name: req.body.name,
+	location: req.body.location,
+	desctiprion: req.body.desctiprion,
+	fullDesctiprion: req.body.fullDesctiprion,
+	image: req.body.image
   }).then(function(catagory) {
 	res.status(201);
 	res.end();
