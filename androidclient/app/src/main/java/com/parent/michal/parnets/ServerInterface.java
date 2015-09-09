@@ -6,6 +6,7 @@ import java.util.List;
 
 import retrofit.Callback;
 import retrofit.client.Client;
+import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
@@ -30,10 +31,10 @@ public interface ServerInterface {
 
     @GET("/providers/all")
     List<Provider> getProviders();
-    @FormUrlEncoded
     @POST("/users/register")
-    void createUser(@Field("user") User user, Callback<User> cb);
+    void createUser(@Body User user, Callback<User> cb);
     @GET ("/users/login/:email/:password")
     User login(String email, String password);
-
+    @POST ("/catagories/register")
+    void createCatagory(@Body CategoryItem catagory, Callback<User> cb);
 }

@@ -1,16 +1,23 @@
 package com.parent.michal.parnets;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.nio.BufferUnderflowException;
+import java.nio.ByteBuffer;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,14 +26,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit.Callback;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class CategoryFrgment  extends Fragment {
 
+    CategoryItem categoryItem;
     Boolean mShowingBack;
     List<CategoryItem> ctegoryItemData = null;
-    public static final String BASE_URL = "http://localhost:3000";
+    public static final String BASE_URL = "http://10.0.0.6:3000";
     RestAdapter restAdapter = new RestAdapter.Builder()
             .setEndpoint(BASE_URL)
             .build();
@@ -57,6 +68,7 @@ public class CategoryFrgment  extends Fragment {
 
         ctegoryItemData =new ArrayList<CategoryItem>();
         ctegoryItemData.add(new CategoryItem(91, "Clowns",bm));
+
         ctegoryItemData.add( new CategoryItem(92, "magician",bm1));
         ctegoryItemData.add( new CategoryItem(93, "Science  ",bm2));
         ctegoryItemData.add( new CategoryItem(94, "Animal   ",bm3));
@@ -67,6 +79,19 @@ public class CategoryFrgment  extends Fragment {
         ctegoryItemData.add( new CategoryItem(99, "DJ’s",bm8));
         ctegoryItemData.add( new CategoryItem(100, "Photographers",bm9));
 
+        categoryItem = new CategoryItem(91, "Clowns",bm);
+
+        restAdapter = new RestAdapter.Builder()
+                .setEndpoint(BASE_URL)
+                .build();
+        //Log.d("categoryItem size",""+categoryItem.image.length);
+
+
+        //once the server will be handy:
+        CreateCategoryAsyncTask createTask =new CreateCategoryAsyncTask();
+        createTask.execute();
+        // POST /users/register
+
 
         ListCategoryAdapter adapter = new ListCategoryAdapter(getActivity(), R.layout.list_item, ctegoryItemData);
         // create a new ListView, set the adapter and item click listener
@@ -75,7 +100,7 @@ public class CategoryFrgment  extends Fragment {
         listViewItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String m= ctegoryItemData.get(position).itemName;
+                String m= ctegoryItemData.get(position).name;
                 DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
                 Date date = null;
                 try {
@@ -100,6 +125,7 @@ public class CategoryFrgment  extends Fragment {
 
         return v;
     }
+
     private void flipCard() {
         if (mShowingBack) {
             getFragmentManager().popBackStack();
@@ -135,5 +161,33 @@ public class CategoryFrgment  extends Fragment {
 
                         // Commit the transaction.
                 .commit();
+    }
+
+    class CreateCategoryAsyncTask extends AsyncTask<Void,Void,Void> {
+
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            ServerInterface server=restAdapter.create(ServerInterface.class);
+            server.createCatagory(categoryItem , new Callback<User>() {
+                @Override
+                public void success(User user, Response response) {
+
+
+                    Log.d("CreateCategoryAsyncTask","CreateCategoryAsyncTask OK");
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    Log.d("CreateCategoryAsyncTask","CreateCategoryAsyncTask ERROR");
+
+
+                    //Toast.makeText(getApplicationContext(), retrofitError.toString(), Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+            return null;
+        }
     }
 }

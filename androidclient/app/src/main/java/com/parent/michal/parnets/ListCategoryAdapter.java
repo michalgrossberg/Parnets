@@ -64,8 +64,8 @@ public class ListCategoryAdapter  extends ArrayAdapter<CategoryItem> {
 
         // get the TextView and then set the text (item name) and tag (item ID) values
         TextView textViewItem = (TextView) convertView.findViewById(R.id.category_name);
-        textViewItem.setText(ctegoryItem.itemName);
-        textViewItem.setTag(ctegoryItem.itemId);
+        textViewItem.setText(ctegoryItem.name);
+        textViewItem.setTag(ctegoryItem.id);
         textViewItem.setTextColor(Color.WHITE);
         textViewItem.setTextSize(40);
         textViewItem.setTypeface(null, Typeface.BOLD);
