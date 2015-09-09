@@ -25,7 +25,7 @@ public class LogIn extends Activity {
 
     Button btnSubmit;
     EditText etFname, etLname, etMail, etPassword, etRepassword;
-    public static final String BASE_URL = "http://10.233.194.7:3000";
+    public static final String BASE_URL = "http://10.0.0.9:3000";
 
     RestAdapter restAdapter;
     User user;
