@@ -3,7 +3,6 @@ package com.parent.michal.parnets;
 import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -25,7 +24,8 @@ import retrofit.RestAdapter;
 
 public class CategoryFrgment  extends Fragment {
 
-    List<CtegoryItem> ctegoryItemData = null;
+    Boolean mShowingBack;
+    List<CategoryItem> ctegoryItemData = null;
     public static final String BASE_URL = "http://localhost:3000";
     RestAdapter restAdapter = new RestAdapter.Builder()
             .setEndpoint(BASE_URL)
@@ -35,6 +35,7 @@ public class CategoryFrgment  extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mShowingBack=false;
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_category_frgment, container, false);
 
@@ -54,17 +55,17 @@ public class CategoryFrgment  extends Fragment {
 
 
 
-        ctegoryItemData =new ArrayList<CtegoryItem>();
-        ctegoryItemData.add(new CtegoryItem(91, "Clowns",bm));
-        ctegoryItemData.add( new CtegoryItem(92, "magician",bm1));
-        ctegoryItemData.add( new CtegoryItem(93, "Science  ",bm2));
-        ctegoryItemData.add( new CtegoryItem(94, "Animal   ",bm3));
-        ctegoryItemData.add( new CtegoryItem(95, "Music  ",bm4));
-        ctegoryItemData.add( new CtegoryItem(96, "Dress Up  ",bm5));
-        ctegoryItemData.add( new CtegoryItem(97, "Cooking  ",bm6));
-        ctegoryItemData.add( new CtegoryItem(98, "Inflatables  ",bm7));
-        ctegoryItemData.add( new CtegoryItem(99, "DJ’s",bm8));
-        ctegoryItemData.add( new CtegoryItem(100, "Photographers",bm9));
+        ctegoryItemData =new ArrayList<CategoryItem>();
+        ctegoryItemData.add(new CategoryItem(91, "Clowns",bm));
+        ctegoryItemData.add( new CategoryItem(92, "magician",bm1));
+        ctegoryItemData.add( new CategoryItem(93, "Science  ",bm2));
+        ctegoryItemData.add( new CategoryItem(94, "Animal   ",bm3));
+        ctegoryItemData.add( new CategoryItem(95, "Music  ",bm4));
+        ctegoryItemData.add( new CategoryItem(96, "Dress Up  ",bm5));
+        ctegoryItemData.add( new CategoryItem(97, "Cooking  ",bm6));
+        ctegoryItemData.add( new CategoryItem(98, "Inflatables  ",bm7));
+        ctegoryItemData.add( new CategoryItem(99, "DJ’s",bm8));
+        ctegoryItemData.add( new CategoryItem(100, "Photographers",bm9));
 
 
         ListCategoryAdapter adapter = new ListCategoryAdapter(getActivity(), R.layout.list_item, ctegoryItemData);
@@ -84,14 +85,55 @@ public class CategoryFrgment  extends Fragment {
                 }
                /* ArrayList<ServiceItem> serviceItems;
                 serviceItems=getAllServicesForLocationAndCategory(m, date ,lang,land);*/
-                final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.main, new ServiceProviderFragment(), "NewFragmentTag");
-                ft.commit();
 
+
+
+         /*       final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.setCustomAnimations( R.anim.slide_in_left,R.anim.slide_out_right);
+                ft.replace(R.id.main, new ServiceProviderFragment(), "ServiceProviderFragment");
+                ft.commit();*/
+
+                flipCard();
             }
         });
 
 
         return v;
+    }
+    private void flipCard() {
+        if (mShowingBack) {
+            getFragmentManager().popBackStack();
+            return;
+        }
+
+        // Flip to the back.
+
+        mShowingBack = true;
+
+        // Create and commit a new fragment transaction that adds the fragment for the back of
+        // the card, uses custom animations, and is part of the fragment manager's back stack.
+
+        getFragmentManager()
+                .beginTransaction()
+
+                        // Replace the default fragment animations with animator resources representing
+                        // rotations when switching to the back of the card, as well as animator
+                        // resources representing rotations when flipping back to the front (e.g. when
+                        // the system Back button is pressed).
+                .setCustomAnimations(
+                        R.anim.card_flip_right_in, R.anim.card_flip_right_out,
+                        R.anim.card_flip_left_in, R.anim.card_flip_left_out)
+
+                        // Replace any fragments currently in the container view with a fragment
+                        // representing the next page (indicated by the just-incremented currentPage
+                        // variable).
+                .replace(R.id.main, new   ServiceProviderFragment(), "ServiceProviderFragment")
+
+                        // Add this transaction to the back stack, allowing users to press Back
+                        // to get to the front of the card.
+                .addToBackStack(null)
+
+                        // Commit the transaction.
+                .commit();
     }
 }

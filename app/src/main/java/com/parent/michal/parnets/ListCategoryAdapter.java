@@ -2,8 +2,6 @@ package com.parent.michal.parnets;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
@@ -21,13 +19,13 @@ import java.util.List;
  * Created by GRMICHAL on 8/15/2015.
  */
 
-public class ListCategoryAdapter  extends ArrayAdapter<CtegoryItem> {
+public class ListCategoryAdapter  extends ArrayAdapter<CategoryItem> {
 
     Context mContext;
     int layoutResourceId;
-    List<CtegoryItem> data;
+    List<CategoryItem> data;
 
-    public ListCategoryAdapter(Context mContext, int layoutResourceId, List<CtegoryItem> data) {
+    public ListCategoryAdapter(Context mContext, int layoutResourceId, List<CategoryItem> data) {
 
         super(mContext, layoutResourceId, data);
 
@@ -42,7 +40,7 @@ public class ListCategoryAdapter  extends ArrayAdapter<CtegoryItem> {
     }
 
     @Override
-    public CtegoryItem getItem(int position) {
+    public CategoryItem getItem(int position) {
         return null;
     }
 
@@ -62,7 +60,7 @@ public class ListCategoryAdapter  extends ArrayAdapter<CtegoryItem> {
         convertView = inflater.inflate(R.layout.list_item, parent, false);
 
         // object item based on the position
-        CtegoryItem ctegoryItem = data.get(position);
+        CategoryItem ctegoryItem = data.get(position);
 
         // get the TextView and then set the text (item name) and tag (item ID) values
         TextView textViewItem = (TextView) convertView.findViewById(R.id.category_name);

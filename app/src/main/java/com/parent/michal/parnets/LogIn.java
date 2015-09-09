@@ -2,6 +2,7 @@ package com.parent.michal.parnets;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,11 +13,33 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 
 public class LogIn extends Activity {
 
     Button btnSubmit;
     EditText etFname, etLname, etMail, etPassword, etRepassword;
+    public static final String BASE_URL = "http://10.233.194.7:3000";
+
+    RestAdapter restAdapter;
+    User user;
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        btnSubmit.setBackgroundResource(R.drawable.button_pressed);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +55,10 @@ public class LogIn extends Activity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-           /*     int flag = 1;
-                if (etPassword.getText().toString().equals("")) {
+
+                btnSubmit.setBackgroundResource(R.drawable.button_pressed);
+                int flag = 1;
+/*                if (etPassword.getText().toString().equals("")) {
                     etPassword.setBackgroundResource(R.drawable.edit_text_red_border);
                     flag = 0;
                 }
@@ -69,8 +94,18 @@ public class LogIn extends Activity {
                         startActivity(intent);
                     }
                 }*/
-                Intent intent = new Intent(LogIn.this, MainActivity.class);
-                startActivity(intent);
+
+                 user=new User(etFname.getText().toString(),etLname.getText().toString()
+                        ,etMail.getText().toString(),etPassword.getText().toString(),UserType.CUSTOMER);
+
+                 restAdapter = new RestAdapter.Builder()
+                        .setEndpoint(BASE_URL)
+                        .build();
+                //once the server will be handy:
+        CreateUserAsyncTask createTask =new CreateUserAsyncTask();
+                createTask.execute();
+                // POST /users/register
+
             }
         });
     }
@@ -105,5 +140,32 @@ public class LogIn extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    class CreateUserAsyncTask extends AsyncTask<Void,Void,Void> {
+
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            ServerInterface server=restAdapter.create(ServerInterface.class);
+            server.createUser(user,new Callback<User>() {
+                @Override
+                public void success(User user, Response response) {
+
+                    Intent intent = new Intent(LogIn.this, MainActivity.class);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+
+                    Toast.makeText(getApplicationContext(), retrofitError.toString(), Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+            return null;
+        }
     }
 }

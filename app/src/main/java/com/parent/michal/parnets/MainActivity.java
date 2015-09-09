@@ -1,8 +1,12 @@
 package com.parent.michal.parnets;
 
+import android.animation.AnimatorInflater;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -34,6 +38,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,18 +58,21 @@ public class MainActivity extends FragmentActivity  {
     private int day;
     private String DATE;
     SeekBar seekBar;
-
+    Activity mActivity;
     static final int DATE_DIALOG_ID = 999;
-
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
 
 
     TextView txtLocation,txtDateDisplay;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mActivity=this;
         seekBar= (SeekBar) findViewById(R.id.seekBar);
         btnLocation= (Button) findViewById(R.id.btnLocation);
         btnChooseDate= (Button) findViewById(R.id.btnChooseDate);
@@ -113,7 +121,7 @@ public class MainActivity extends FragmentActivity  {
         CategoryFrgment myf = new CategoryFrgment();
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(R.id.main, myf);
+        transaction.add(R.id.main, myf,"CategoryFrgment");
         transaction.commit();
 
 
@@ -245,15 +253,21 @@ public class MainActivity extends FragmentActivity  {
                     .append("-").append(day).append("-").append(year)
                     .append(" "));
             int i =month+1;
-            String tmp=i+ " "+day+" "+year;
+            String tmp=i+ "/"+day+"/"+year;
 
             Calendar c = Calendar.getInstance();
             c.set(year, i, day);
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String formattedDate = sdf.format(c.getTime());
-            DATE=formattedDate;
-            SharedHandler.save("date", DATE,
+            String pattern = "MM/dd/yyyy";
+            SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+            Date d=null;
+            try {
+                d=sdf.parse(tmp);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            SharedHandler.save("date", d.toString(),
                     "details", MainActivity.this);
 
             //Toast.makeText(getApplicationContext(), formattedDate, Toast.LENGTH_SHORT).show();
@@ -261,4 +275,73 @@ public class MainActivity extends FragmentActivity  {
 
         }
     };
+
+
+    @Override
+    public void onBackPressed() {
+
+        FragmentManager fragmentManager=getFragmentManager();
+        Fragment fragment=fragmentManager.findFragmentById(R.id.main);
+        if( fragment.getTag().equals("CategoryFrgment")){
+            super.onBackPressed();
+
+        }
+        else
+            if(fragment.getTag().equals("ServiceProviderFragment")){
+
+
+                /*final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.setCustomAnimations( R.anim.slide_in_left,R.anim.slide_out_right);
+                ft.replace(R.id.main, new CategoryFrgment(), "CategoryFrgment");
+                ft.commit();*/
+                String backStateName = fragment.getClass().getName();
+
+                FragmentManager manager = getFragmentManager();
+                boolean fragmentPopped = manager.popBackStackImmediate (backStateName, 0);
+
+                if (!fragmentPopped){ //fragment not in back stack, create it.
+                    FragmentTransaction ft = manager.beginTransaction();
+                    ft.replace(R.id.main, fragment);
+                    ft.addToBackStack(backStateName);
+                    ft.commit();
+                }
+                flipCard();
+
+        }
+
+        
+    }
+    private void flipCard() {
+
+        // Create and commit a new fragment transaction that adds the fragment for the back of
+        // the card, uses custom animations, and is part of the fragment manager's back stack.
+
+        getFragmentManager()
+                .beginTransaction()
+
+                        // Replace the default fragment animations with animator resources representing
+                        // rotations when switching to the back of the card, as well as animator
+                        // resources representing rotations when flipping back to the front (e.g. when
+                        // the system Back button is pressed).
+                .setCustomAnimations(
+                        R.anim.card_flip_right_in, R.anim.card_flip_right_out,
+                        R.anim.card_flip_left_in, R.anim.card_flip_left_out)
+
+                        // Replace any fragments currently in the container view with a fragment
+                        // representing the next page (indicated by the just-incremented currentPage
+                        // variable).
+                .replace(R.id.main, new CategoryFrgment(), "CategoryFrgment")
+
+                        // Add this transaction to the back stack, allowing users to press Back
+                        // to get to the front of the card.
+                .addToBackStack(null)
+
+                        // Commit the transaction.
+                .commit();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
 }
